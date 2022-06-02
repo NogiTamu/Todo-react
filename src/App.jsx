@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export const App = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompTodos, setIncompTodos] = useState(["a", "b"]);
+  const [incompTodos, setIncompTodos] = useState([]);
   const [compTodos, setcompTodos] = useState(["c"]);
   const onChangeTodoText = (e) => {
     setTodoText(e.target.value);
@@ -16,6 +16,22 @@ export const App = () => {
     } else {
       return;
     }
+  };
+
+  const onClickDel = (index) => {
+    const newTodos = [...incompTodos];
+    newTodos.splice(index, 1);
+    setIncompTodos(newTodos);
+  };
+
+  const onClickComp = (index) => {
+    const newInCompTodos = [...incompTodos];
+    newInCompTodos.splice(index, 1);
+    setIncompTodos(newInCompTodos);
+    const newCompTodos = [...compTodos, incompTodos[index]];
+
+    setIncompTodos(newInCompTodos);
+    setcompTodos(newCompTodos);
   };
 
   return (
@@ -32,13 +48,13 @@ export const App = () => {
       <div className="incomplete-area">
         <p className="title">未完了</p>
 
-        {incompTodos.map((todo) => {
+        {incompTodos.map((todo, index) => {
           return (
             <>
               <ul key={todo} className="todo-li">
                 <li>{todo}</li>
-                <button>完了</button>
-                <button>削除</button>
+                <button onClick={() => onClickComp(index)}>完了</button>
+                <button onClick={() => onClickDel(index)}>削除</button>
               </ul>
             </>
           );
