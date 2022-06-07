@@ -1,10 +1,13 @@
 import "./styles.css";
 import React, { useState } from "react";
+import { InputTodo } from "./components/inputTodo";
+import { IncompleteTodos } from "./components/incompleteTodos";
+import { CompleteTodos } from "./components/completeTodos";
 
 export const App = () => {
   const [todoText, setTodoText] = useState("");
   const [incompTodos, setIncompTodos] = useState([]);
-  const [compTodos, setcompTodos] = useState(["c"]);
+  const [compTodos, setcompTodos] = useState([]);
   const onChangeTodoText = (e) => {
     setTodoText(e.target.value);
   };
@@ -44,44 +47,17 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="Todo入力"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>追加</button>
-      </div>
-
-      <div className="incomplete-area">
-        <p className="title">未完了</p>
-
-        {incompTodos.map((todo, index) => {
-          return (
-            <>
-              <ul key={todo} className="todo-li">
-                <li>{todo}</li>
-                <button onClick={() => onClickComp(index)}>完了</button>
-                <button onClick={() => onClickDel(index)}>削除</button>
-              </ul>
-            </>
-          );
-        })}
-      </div>
-
-      <div className="complete-area">
-        <p className="title">完了</p>
-        {compTodos.map((todo, index) => {
-          return (
-            <>
-              <ul key={todo} className="todo-li">
-                <li>{todo}</li>
-                <button onClick={() => onClickBack(index)}>戻す</button>
-              </ul>
-            </>
-          );
-        })}
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickAdd}
+      />
+      <IncompleteTodos
+        Todos={incompTodos}
+        onClickComp={onClickComp}
+        onClickDel={onClickDel}
+      />
+      <CompleteTodos Todos={compTodos} onClickBack={onClickBack} />
     </>
   );
 };
