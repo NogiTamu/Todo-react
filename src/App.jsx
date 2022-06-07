@@ -51,7 +51,10 @@ export const App = () => {
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        disabled={incompTodos.length >= 5}
       />
+      {incompTodos.length >= 5 && <p style={{ color: "red" }}>BAKA</p>}
+
       <IncompleteTodos
         Todos={incompTodos}
         onClickComp={onClickComp}
