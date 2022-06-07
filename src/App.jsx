@@ -34,6 +34,14 @@ export const App = () => {
     setcompTodos(newCompTodos);
   };
 
+  const onClickBack = (index) => {
+    const newCompTodos = [...compTodos];
+    newCompTodos.splice(index, 1);
+    const newInCompTodos = [...incompTodos, compTodos[index]];
+    setcompTodos(newCompTodos);
+    setIncompTodos(newInCompTodos);
+  };
+
   return (
     <>
       <div className="input-area">
@@ -63,12 +71,12 @@ export const App = () => {
 
       <div className="complete-area">
         <p className="title">完了</p>
-        {compTodos.map((todo) => {
+        {compTodos.map((todo, index) => {
           return (
             <>
               <ul key={todo} className="todo-li">
                 <li>{todo}</li>
-                <button>戻す</button>
+                <button onClick={() => onClickBack(index)}>戻す</button>
               </ul>
             </>
           );
